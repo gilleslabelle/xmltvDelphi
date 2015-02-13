@@ -1,1 +1,1 @@
-# xmltvUpdater
+# xmltvDelphi
