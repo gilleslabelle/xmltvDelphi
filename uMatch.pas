@@ -18,10 +18,6 @@ type
 
   TMatch = class(TInterfacedObject, IComparable<TObject>)
   private
-  protected
-    function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
-    function _AddRef: Integer; stdcall;
-    function _Release: Integer; stdcall;
   public
     accuracy: TMatchAccuracy;
     matchingEpisodes: TVDBEpisodeColl;
@@ -70,20 +66,6 @@ begin
   inherited;
 end;
 
-function TMatch.QueryInterface(const IID: TGUID; out Obj): HResult;
-begin
-  QueryInterface := 0;
-end;
-
-function TMatch._AddRef: Integer;
-begin
-  _AddRef := 0;
-end;
-
-function TMatch._Release: Integer;
-begin
-  _Release := 0;
-end;
 
 { TMatchColl }
 

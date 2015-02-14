@@ -5,7 +5,7 @@ interface
 uses
   System.SysUtils, System.Classes, Xml.xmldom, Xml.XMLIntf, Xml.omnixmldom, Xml.XMLDoc, Data.Bind.EngExt,
   Vcl.Bind.DBEngExt, System.Rtti, System.Bindings.Outputs, IPPeerClient, REST.Client, Data.Bind.Components,
-  Data.Bind.ObjectScope, System.JSON;
+  Data.Bind.ObjectScope, System.JSON, ZipForge;
 
 type
   TDataModuleMain = class(TDataModule)
@@ -15,13 +15,15 @@ type
     RESTRequestNextUpcomingProgram: TRESTRequest;
     RESTResponse1: TRESTResponse;
     RESTRequestUpcomingPrograms: TRESTRequest;
+    zpfrg1: TZipForge;
   private
     { Private declarations }
   public
     { Public declarations }
     function GetNextRecords(letype: integer): TJsonValue;
     procedure GetNextRecordTitles(const letype: integer; out LesTitres: TStringList);
-    function GetXmlDocument(url: string; pagestream: TStringStream): Boolean;
+    function GetXmlDocument(url: string; pagestream: TStringStream): Boolean; overload;
+    function GetXmlDocument(url: string; pagestream: TStringStream;zipFileName:string): Boolean; overload;
   end;
 
 var
@@ -116,6 +118,20 @@ begin
 
 end;
 
+function TDataModuleMain.GetXmlDocument(url: string; pagestream: TStringStream; zipFileName: string): Boolean;
+begin
+
+Result:= false;
+   if  GetXmlDocument(url,pagestream) then begin
+
+   zpfrg1.OpenArchive(pagestream,false);
+   pagestream.Position:=0;
+   zpfrg1.ExtractToStream(zipFileName,pagestream);
+       Result := True;
+   end;
+
+end;
+
 function TDataModuleMain.GetXmlDocument(url: string; pageStream: TStringStream): Boolean;
 var
   // doc: IXMLDocument;
@@ -135,15 +151,19 @@ begin
   Result := TRUE;
 
   // * After 1 minute stop trying
+  CodeSite.SendMsg(url);
 
   IdHTTP.ReadTimeout := 1 * 60 * 1000;
   try // --> First try
+
     IdHTTP.Get(url, pageStream);
   except
     try // --> Second try
+    CodeSite.SendWarning('Essai 2 ');
       IdHTTP.Get(url, pageStream);
     except
       try // --> Third try
+    CodeSite.SendWarning('Essai 3 ');
         IdHTTP.Get(url, pageStream);
       except
         on e: EIdReadTimeout do

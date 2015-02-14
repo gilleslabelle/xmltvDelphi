@@ -23,10 +23,6 @@ type
     Ffail: Integer;
     Fseries: String;
     Fsucess: Integer;
-  protected
-    function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
-    function _AddRef: Integer; stdcall;
-    function _Release: Integer; stdcall;
   public
     procedure addFail;
     procedure addSuccess;
@@ -97,7 +93,7 @@ end;
 destructor TSeriesTracker.Destroy;
 begin
 
-  inherited;
+  inherited Destroy;
 end;
 
 function TSeriesTracker.getFail: Integer;
@@ -133,20 +129,6 @@ begin
   Result := getSucess + getFail;
 end;
 
-function TSeriesTracker.QueryInterface(const IID: TGUID; out Obj): HResult;
-begin
-  QueryInterface := 0;
-end;
-
-function TSeriesTracker._AddRef: Integer;
-begin
-  _AddRef := 0;
-end;
-
-function TSeriesTracker._Release: Integer;
-begin
-  _Release := 0;
-end;
 
 { TSeriesTracker }
 

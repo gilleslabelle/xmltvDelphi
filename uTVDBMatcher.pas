@@ -28,7 +28,7 @@ type
     procedure SetfuzzyTitleMatches(const Value: TVDBEpisodeColl);
     procedure SetoriginalAirDateMatches(const Value: TVDBEpisodeColl);
   public
-    constructor Create(guideEpisode: TEpisode; tvdbEpisodes: IXMLTVDBEpisodeTypeList);
+    constructor Create(guideEpisode: IEpisode; tvdbEpisodes: IXMLTVDBEpisodeTypeList);
     destructor Destroy; override;
 
     property containsTitleMatches: TVDBEpisodeColl read FcontainsTitleMatches write SetcontainsTitleMatches;
@@ -43,7 +43,7 @@ implementation
 uses Rest.Utils, uTVDB, System.Math, System.SysUtils;
 { implementation of TVDBMatcher }
 
-constructor TTVDBMatcher.Create(guideEpisode: TEpisode; tvdbEpisodes: IXMLTVDBEpisodeTypeList);
+constructor TTVDBMatcher.Create(guideEpisode: IEpisode; tvdbEpisodes: IXMLTVDBEpisodeTypeList);
 var
   guideTitle: string;
   hasTitle: Boolean;
@@ -56,7 +56,7 @@ var
   tvdbEpisodeNumber: string;
   hasTVDBImage: Boolean;
   i: Integer;
-  tvdbEpisode: TTVDBEpisode;
+  tvdbEpisode: ITVDBEpisode;
   contains: Boolean;
   containsNormalized: Boolean;
 begin
@@ -132,6 +132,12 @@ end;
 
 destructor TTVDBMatcher.Destroy;
 begin
+  FcontainsTitleMatches.free;
+    FexactTitleMatches.free;
+    FfuzzyTitleMatches.free;
+    ForiginalAirDateMatches.free;
+
+
   inherited Destroy;
 end;
 

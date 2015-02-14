@@ -25,7 +25,7 @@ type
 
   public
     // equality basaed on seriesId
-    function equals(o: TTVDBSeries): boolean;  reintroduce;
+    function equals(const o: TTVDBSeries): boolean;  reintroduce;
     property seriesId: String read FseriesId write FseriesId;
     property seriesName: String read FseriesName write FseriesName;
     property seriesYear: String read FseriesYear write FseriesYear;
@@ -33,8 +33,8 @@ type
     function hashCode: Integer;
     function toString: String;  reintroduce;
 
-    constructor Create(seriesId: String; seriesName: String; seriesYear: String); overload;
-    constructor Create(seriesId: String); overload;
+    constructor Create(const seriesId: String; const seriesName: String;const  seriesYear: String); overload;
+    constructor Create(const seriesId: String); overload;
 
     destructor Destroy; override;
   end;
@@ -54,7 +54,7 @@ uses
 
 { implementation of TVDBSeries }
 
-constructor TTVDBSeries.Create(seriesId, seriesName, seriesYear: String);
+constructor TTVDBSeries.Create(const seriesId, seriesName, seriesYear: String);
 begin
   inherited Create;
   Self.FseriesId := seriesId;
@@ -62,7 +62,7 @@ begin
   Self.FseriesYear := seriesYear;
 end;
 
-constructor TTVDBSeries.Create(seriesId: String);
+constructor TTVDBSeries.Create(const seriesId: String);
 begin
 
   inherited Create;
@@ -74,7 +74,7 @@ begin
   inherited Destroy;
 end;
 
-function TTVDBSeries.equals(o: TTVDBSeries): boolean;
+function TTVDBSeries.equals(const o: TTVDBSeries): boolean;
 var
   otherSeries: TTVDBSeries;
 begin

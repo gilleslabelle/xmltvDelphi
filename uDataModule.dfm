@@ -58,4 +58,23 @@ object DataModuleMain: TDataModuleMain
     Left = 368
     Top = 336
   end
+  object zpfrg1: TZipForge
+    ExtractCorruptedFiles = False
+    CompressionLevel = clFastest
+    CompressionMode = 1
+    CurrentVersion = '6.50 '
+    SpanningMode = smNone
+    SpanningOptions.AdvancedNaming = False
+    SpanningOptions.FirstVolumeSize = 0
+    SpanningOptions.VolumeSize = vsAutoDetect
+    SpanningOptions.CustomVolumeSize = 0
+    Options.FlushBuffers = True
+    Options.OEMFileNames = True
+    InMemory = False
+    Zip64Mode = zmDisabled
+    UnicodeFilenames = False
+    EncryptionMethod = caPkzipClassic
+    Left = 672
+    Top = 368
+  end
 end

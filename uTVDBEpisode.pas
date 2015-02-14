@@ -15,31 +15,54 @@ interface
 uses System.Generics.Collections;
 
 type
+  ITVDBEpisode = interface['{95CA74BA-EDD5-44B3-A3C6-6158DCD22E5B}']
+    function toString: String;
+//    procedure SetepisodeNumber(const Value: String);
+//    procedure SetfirstAired(const Value: String);
+//    procedure SethasImage(const Value: boolean);
+//    procedure SetseasonNumber(const Value: String);
+//    procedure Settitle(const Value: String);
+    function GetepisodeNumber: String;
+    function GetfirstAired: String;
+    function GethasImage: boolean;
+    function GetseasonNumber: String;
+    function Gettitle: String;
 
-  TTVDBEpisode = class
+  end;
+
+  TTVDBEpisode = class(TInterfacedObject,ITVDBEpisode)
   strict private
     FepisodeNumber: String;
     FfirstAired: String;
     FhasImage: boolean;
     FseasonNumber: String;
     Ftitle: String;
-
   public
+//    procedure SetepisodeNumber(const Value: String);
+//    procedure SetfirstAired(const Value: String);
+//    procedure SethasImage(const Value: boolean);
+//    procedure SetseasonNumber(const Value: String);
+//    procedure Settitle(const Value: String);
+    function GetepisodeNumber: String;
+    function GetfirstAired: String;
+    function GethasImage: boolean;
+    function GetseasonNumber: String;
+    function Gettitle: String;
 
-    property episodeNumber: String read FepisodeNumber write FepisodeNumber;
-    property firstAired: String read FfirstAired write FfirstAired;
-    property hasImage: boolean read FhasImage write FhasImage;
-    property seasonNumber: String read FseasonNumber write FseasonNumber;
-    property title: String read Ftitle write Ftitle;
+
+//    property episodeNumber: String read GetepisodeNumber write SetepisodeNumber;
+//    property firstAired: String read GetfirstAired write SetfirstAired;
+//    property hasImage: boolean read GethasImage write SethasImage;
+//    property seasonNumber: String read GetseasonNumber write SetseasonNumber;
+//    property title: String read Gettitle write Settitle;
 
     function toString: String;  reintroduce;
-    constructor Create(tvdbTitle: String; tvdbFirstAired: String; tvdbSeasonNumber: String; tvdbEpisodeNumber: String;
-      hasTVDBImage: boolean); overload;
-    // constructor Create; overload;
+    constructor Create(tvdbTitle: String; tvdbFirstAired: String; tvdbSeasonNumber: String; tvdbEpisodeNumber: String;    hasTVDBImage: boolean); overload;
+
     destructor Destroy; override;
   end;
 
-  TVDBEpisodeColl = class(TObjectList<TTVDBEpisode>)
+  TVDBEpisodeColl = class(TList<ITVDBEpisode>)
   public
     constructor Create; overload;
     destructor Destroy; override;
@@ -71,6 +94,56 @@ begin
   inherited Destroy;
 end;
 
+function TTVDBEpisode.GetepisodeNumber: String;
+begin
+  Result := FepisodeNumber;
+end;
+
+function TTVDBEpisode.GetfirstAired: String;
+begin
+  Result := FfirstAired;
+end;
+
+function TTVDBEpisode.GethasImage: boolean;
+begin
+Result := FhasImage;
+end;
+
+function TTVDBEpisode.GetseasonNumber: String;
+begin
+    Result := FseasonNumber;
+end;
+
+function TTVDBEpisode.Gettitle: String;
+begin
+    Result := Ftitle
+end;
+
+//procedure TTVDBEpisode.SetepisodeNumber(const Value: String);
+//begin
+//  FepisodeNumber := Value;
+//end;
+//
+//procedure TTVDBEpisode.SetfirstAired(const Value: String);
+//begin
+//  FfirstAired := Value;
+//end;
+//
+//procedure TTVDBEpisode.SethasImage(const Value: boolean);
+//begin
+//  FhasImage := Value;
+//end;
+//
+//procedure TTVDBEpisode.SetseasonNumber(const Value: String);
+//begin
+//  FseasonNumber := Value;
+//end;
+//
+//procedure TTVDBEpisode.Settitle(const Value: String);
+//begin
+//  Ftitle := Value;
+//end;
+
 function TTVDBEpisode.toString: String;
 begin
   Result := FseasonNumber + 'x' + FepisodeNumber + ' - ' + Ftitle + ' (' + FfirstAired + ')';
@@ -80,7 +153,7 @@ end;
 
 function TVDBEpisodeColl.containsAll(coll: TVDBEpisodeColl): boolean;
 var
-  unElement: TTVDBEpisode;
+  unElement: ITVDBEpisode;
 begin
 
   for unElement in coll do
@@ -99,7 +172,7 @@ end;
 constructor TVDBEpisodeColl.Create;
 begin
   inherited Create();
-  OwnsObjects := True;
+//  OwnsObjects := True;
 
 end;
 
@@ -116,7 +189,7 @@ end;
 
 function TVDBEpisodeColl.toString: String;
 var
-  item: TTVDBEpisode;
+  item: ITVDBEpisode;
 begin
 
   Result := '';

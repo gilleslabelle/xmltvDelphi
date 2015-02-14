@@ -172,7 +172,7 @@ var
   UnseriesTracker: TSeriesTracker;
   knownTVDBId: Integer;
   tvdbSeries: TTVDBSeries;
-  guideEpisode: TEpisode;
+  guideEpisode: IEpisode;
   zap2ItId: string;
   displayValue: string;
   multiPartNaming: string;
@@ -585,31 +585,20 @@ begin
 
           //
 
-          // if successCount=5 then begin
-          //
-          // break;
-          // end;
+           if successCount=5 then begin
 
-          if assigned(tvdb) then
-            FreeAndNil(tvdb);
+           break;
+           end;
+
+          if Assigned(tvdbSeries) then
+           FreeAndNil(tvdbSeries);
+
+//          if assigned(tvdb) then
+//            FreeAndNil(tvdb);
+
+
 
         end; // done looping thru guide episodes
-        //
-        // XMLOutputter out = new XMLOutputter(Format.getPrettyFormat());
-        // CodeSite.NOTICE( 'Writing updated XMLTV file to: '+ outputXMLFile);
-        // try (FileWriter writer = new FileWriter(outputXMLFile))
-        // begin
-        // out.output(xmltv, writer);
-        // writer.close();
-        //
-        // CodeSite.SendMsg('Successfully created updated XMLTV file, now renaming original file to .old: '+ xmlFile.getAbsolutePath());
-        // renameToOld(xmlFile);//success, rename the old file to a .old extension (to prevent processing again)
-        // end;
-        // catch(IOException x)
-        // begin
-        // CodeSite.ERROR( 'Failed to write new XML File at: '+ outputXMLFile.getAbsolutePath(),x);
-        // end;
-        //
         //
 
       end;

@@ -15,8 +15,58 @@ interface
 uses uTVDBSeries, uTVDBEpisode, System.Generics.Collections;
 
 type
+  IEpisode = interface['{C857D0E2-372E-437A-8A9E-CE615E1FECE4}']
+        function addTVDBSeriesEpisodeNumbers(seasonNumber: String; episodeNumber: String): boolean;
+    procedure clearRemoteIds;
 
-  TEpisode = class
+
+    function getEpisode: Integer;
+    function getLanguage: String;
+    function getMultipartSeasonEpisodeNaming: String;
+    function getOriginalAirDate: TDateTime;
+    function getPaddedEpisodeNumber: String;
+    function getPaddedSeasonNumber: String;
+    // function getRemoteIds: TDictionary<String, String>;
+    procedure getRemoteIds(out resultat: TDictionary<String, String>);
+    function getSeason: Integer;
+    function getSeries: TTVDBSeries;
+    function getSeriesYear: String;
+    function getTitle: String;
+    function getTVDBId: String;
+    // three numbers separated by dots, the first is the series or season, the second
+    // the episode number within that series, and the third the part number, if the
+    // programme is part of a two-parter.  All these numbers are indexed from zero,
+    // and they can be given in the form 'X/Y' to show series X out of Y series made,
+    // or episode X out of Y episodes in this series, or part X of a Y-part episode.
+    // If any of these aren't known they can be omitted. You can put spaces whereever
+    // you like to make things easier to read.
+    function getXMLTVSeasonEpisodeAttribute: String;
+    function hasEpisode: boolean;
+    function hasOriginalAirDate: boolean;
+    function hasRemoteId: boolean;
+    function hasSeason: boolean;
+    function hasSeries: boolean;
+    function hasTitle: boolean;
+    function hasTVDBid: boolean;
+    function hasTVDBImage: boolean;
+    function isMultiPart: boolean;
+    procedure setEpisode(const e: Integer);
+    procedure setHasTVDBImage(const hasTVDBImage: boolean);
+    procedure setIMDBId(const imdbId: String);
+    procedure setLanguage(const langCode: String);
+    function setMatchingEpisodes(const episodes: TVDBEpisodeColl): boolean;
+    procedure setMultipart(const multipart: boolean);
+    procedure setMultipartSeasonEpisodeNaming(const seasonEpisodeNaming: String);
+    procedure setOriginalAirDate(const dt: TDateTime);
+    procedure setSeason(const s: Integer);
+    procedure setSeries(const series: TTVDBSeries);
+    procedure setTitle(const title: String);
+    procedure setZap2ItId(const zap2ItId: String);
+    function toString: String;
+
+  end;
+
+  TEpisode = class (TInterfacedObject,IEpisode)
   private
     Fepisode: Integer;
     FhasTVDBImage: boolean; // remote id's we can use to look up series
@@ -32,10 +82,12 @@ type
 
     function padNumber(const num: Integer): String;
   public
+    constructor Create(const series: TTVDBSeries); overload;
+    destructor Destroy; override;
+
     function addTVDBSeriesEpisodeNumbers(seasonNumber: String; episodeNumber: String): boolean;
     procedure clearRemoteIds;
 
-    constructor Create(series: TTVDBSeries); overload;
 
     function getEpisode: Integer;
     function getLanguage: String;
@@ -43,7 +95,8 @@ type
     function getOriginalAirDate: TDateTime;
     function getPaddedEpisodeNumber: String;
     function getPaddedSeasonNumber: String;
-    function getRemoteIds: TDictionary<String, String>;
+    // function getRemoteIds: TDictionary<String, String>;
+    procedure getRemoteIds(out resultat: TDictionary<String, String>);
     function getSeason: Integer;
     function getSeries: TTVDBSeries;
     function getSeriesYear: String;
@@ -80,7 +133,6 @@ type
     procedure setZap2ItId(const zap2ItId: String);
     function toString: String; reintroduce;
     // constructor Create; overload;
-    destructor Destroy; override;
   end;
 
 implementation
@@ -122,19 +174,20 @@ begin
   Self.Fimdbid := '';
 end;
 
-constructor TEpisode.Create(series: TTVDBSeries);
+constructor TEpisode.Create(const series: TTVDBSeries);
 begin
   inherited Create;
   Fseason := -1;
   Fepisode := -1;
   Self.ForiginalAirDate.SetToNull;
-  Self.Fseries := series;
+  Fseries := TTVDBSeries.Create(series.seriesId, series.seriesName, series.seriesYear);
+
 end;
 
 destructor TEpisode.Destroy;
 begin
-  inherited Destroy;
   Fseries.Free;
+  inherited Destroy;
 end;
 
 function TEpisode.getEpisode: Integer;
@@ -167,24 +220,24 @@ begin
   Result := padNumber(getSeason);
 end;
 
-function TEpisode.getRemoteIds: TDictionary<String, String>;
-var
-  ids: TDictionary<String, String>;
+procedure TEpisode.getRemoteIds(out resultat: TDictionary<String, String>);
+// var
+// ids: TDictionary<String, String>;
 begin
   // GetSeriesByRemoteID.php?imdbid=<imdbid>&language=<language>&zap2it=<zap2it>
 
-  ids := TDictionary<String, String>.Create;
+  // ids := TDictionary<String, String>.Create;
   // LinkedHashMap<String,String> ids = new LinkedHashMap<>();
   if Fzap2itid <> '' then
   begin
-    ids.Add(ZAP2IT_IDENTIFIER, Fzap2itid);
+    resultat.Add(ZAP2IT_IDENTIFIER, Fzap2itid);
   end;
   if (Fimdbid <> '') then
   begin
-    ids.Add(IMDB_IDENTIFIER, Fimdbid);
+    resultat.Add(IMDB_IDENTIFIER, Fimdbid);
   end;
 
-  Result := ids;
+  // Result := ids;
 end;
 
 function TEpisode.getSeason: Integer;
@@ -302,11 +355,11 @@ end;
 
 function TEpisode.setMatchingEpisodes(const episodes: TVDBEpisodeColl): boolean;
 var
-  ep: TTVDBEpisode;
+  ep: ITVDBEpisode;
   seasonEpisodeNaming: string;
   lastSeason: Integer;
-  firstEpisode: TTVDBEpisode;
-  nextEpisode: TTVDBEpisode;
+  firstEpisode: ITVDBEpisode;
+  nextEpisode: ITVDBEpisode;
 begin
   if (episodes.isEmpty()) then
   begin
@@ -319,7 +372,7 @@ begin
   begin
     setMultipart(False);
     ep := episodes[0];
-    Result := addTVDBSeriesEpisodeNumbers(ep.seasonNumber, ep.episodeNumber);
+    Result := addTVDBSeriesEpisodeNumbers(ep.GetseasonNumber, ep.GetepisodeNumber);
     exit;
   end
   else // multipart
@@ -336,11 +389,11 @@ begin
       end;
 
       // check the season/episode numbers for integrity
-      if (not addTVDBSeriesEpisodeNumbers(nextEpisode.seasonNumber, nextEpisode.episodeNumber)) then
+      if (not addTVDBSeriesEpisodeNumbers(nextEpisode.GetseasonNumber, nextEpisode.GetepisodeNumber)) then
       begin
         CodeSite.SendError('Found a multi-part match on thetvdb.com, ' +
-          'but the season and episode numbers are invalid (' + nextEpisode.seasonNumber + '\' +
-          nextEpisode.episodeNumber + '\). Skipping and trying again later.');
+          'but the season and episode numbers are invalid (' + nextEpisode.GetseasonNumber + '\' +
+          nextEpisode.GetepisodeNumber + '\). Skipping and trying again later.');
         Result := False;
         exit;
       end;
@@ -360,7 +413,7 @@ begin
     setMultipartSeasonEpisodeNaming(seasonEpisodeNaming);
 
     // use the first episode's season/episode as the 'default' if we need just a single-episode number
-    addTVDBSeriesEpisodeNumbers(firstEpisode.seasonNumber, firstEpisode.episodeNumber);
+    addTVDBSeriesEpisodeNumbers(firstEpisode.GetseasonNumber, firstEpisode.GetepisodeNumber);
 
     Result := True;
     exit;

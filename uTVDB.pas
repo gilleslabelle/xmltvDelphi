@@ -19,8 +19,8 @@ type
   TTVDB = class
   private const
 
-    UNCOMMON_CHAR_ARRAY: array [1 .. 26] of char = ('<', '>', ':', '"', '/', '\', '|', '?', '*', '#', '$', '%', '^',
-      '*', '!', '~', '\', '’', '=', '[', ']', '(', ')', ';', ',', '_');
+//    UNCOMMON_CHAR_ARRAY: array [1 .. 26] of char = ('<', '>', ':', '"', '/', '\', '|', '?', '*', '#', '$', '%', '^',
+//      '*', '!', '~', '\', '’', '=', '[', ']', '(', ')', ';', ',', '_');
 
     UNCOMMON_CHAR_ARRAY2: Set of char = ['<', '>', ':', '"', '/', '\', '|', '?', '*', '#', '$', '%', '^', '*', '!', '~',
       '\', '’', '=', '[', ']', '(', ')', ';', ',', '_'];
@@ -28,7 +28,7 @@ type
   strict private
     // UNCOMMON_CHARS: Tlist<char>;
 
-    Fe: TEpisode;
+    Fe: IEpisode;
     Fserieses: TTVDBSeriesColl;
 
     // function findMatchingSeries: TTVDBSeriesColl;
@@ -43,7 +43,7 @@ type
     class function getLevenshteinDistance(s: String; t: String): Integer;
     function lookup: boolean;
     class function normalize(s: String): String;
-    constructor Create(e: TEpisode); overload;
+    constructor Create(const e: IEpisode); overload;
     // ###if no series, no lookup###
     //
     // Lookups from best to worst:
@@ -77,9 +77,9 @@ uses
 
 destructor TTVDB.Destroy;
 begin
+  Fserieses.Free;
   inherited Destroy;
 
-  Fserieses.Free;
 end;
 
 class function TTVDB.cleanCommonWords(s: String): String;
@@ -125,9 +125,11 @@ begin
   Result := TNetEncoding.URL.Encode(s);
 end;
 
-constructor TTVDB.Create(e: TEpisode);
+constructor TTVDB.Create(const e: IEpisode);
 begin
   inherited Create;
+
+
   self.Fe := e;
 
   // UNCOMMON_CHARS := Tlist<char>.Create;
@@ -178,8 +180,13 @@ var
   Entry: TPair<String, String>;
   remoteProvider: string;
   remoteId: string;
+  remoteIds :TDictionary<String, String>;
 begin
   // ids := TTVDBSeriesColl.Create;
+
+   remoteIds :=TDictionary<String, String>.Create;
+   try
+
 
   if (Fe.hasTVDBid()) then
   begin
@@ -193,8 +200,8 @@ begin
   // remote id provided from schedulesdirect/zap2it or imdb
   if (Fe.hasRemoteId()) then
   begin
-
-    for Entry in Fe.getRemoteIds do
+     Fe.getRemoteIds(remoteIds);
+    for Entry in remoteIds do
     begin
 
       remoteProvider := Entry.Key;
@@ -284,6 +291,10 @@ begin
     CodeSite.SendWarning('No series could be found by querying TheTVDB.com for series named ' + Fe.getSeries.ToString);
   end;
 
+   finally
+     remoteIds.Free;
+
+   end;
   // Result := ids;
 
 end;
@@ -416,10 +427,12 @@ begin
   // tvdbURL := 'http://www.thetvdb.com/api/' + TVDB_API_KEY + '/series/'+series.seriesId+'/all/'+ Fe.getLanguage+'.zip';
   tvdbURL := 'http://www.thetvdb.com/api/' + TVDB_API_KEY + '/series/' + series.seriesId + '/all/' +
     Fe.getLanguage + '.xml';
-  // Logger.log(tvdbURL);
+
+
 
   ms := TStringStream.Create;
-
+  try
+//   if  DataModuleMain.GetXmlDocument(tvdbURL, ms,Fe.getLanguage + '.xml' ) then
   if DataModuleMain.GetXmlDocument(tvdbURL, ms) then
   begin
     DataModuleMain.XMLDocument1.LoadFromStream(ms, TXMLEncodingType.xetUTF_8);
@@ -427,25 +440,6 @@ begin
   end;
 
 
-  // objHttp := TIdHTTP.Create(nil);
-  //
-  // ms := TStringStream.Create;
-  //
-  // try
-  // objHttp.Get(tvdbURL, ms);
-  //
-  // DataModuleMain.XMLDocument1.LoadFromStream(ms, TXMLEncodingType.xetUTF_8);
-  // except
-  // on e: Exception do
-  // begin
-  // CodeSite.SendException('Erreur de get pour le site : «' + tvdbURL + '»', e);
-  // exit;
-  // end;
-  //
-  // end;
-  //
-  //
-  // Xml := uTVDBBind.GetData(DataModuleMain.XMLDocument1); // doc);
 
   if Xml = nil then
   begin
@@ -456,38 +450,8 @@ begin
   begin
 
     seriesElem := Xml.series;
-    // Element seriesElem = xml.getRootElement().getChild('Series');
-    { Sample series:
-      <Series>
-      <id>248835</id>
-      <Actors>|Jennifer Morrison|Josh Dallas|Ginnifer Goodwin|Lana Parrilla|Archie Hopper|Jared Gilmore|Jamie Dornan|Robert Carlyle|</Actors>
-      <Airs_DayOfWeek>Sunday</Airs_DayOfWeek>
-      <Airs_Time>8:00 PM</Airs_Time>
-      <ContentRating>TV-PG</ContentRating>
-      <FirstAired>2011-10-23</FirstAired>
-      <Genre>|Drama|Fantasy|</Genre>
-      <IMDB_ID>tt1843230</IMDB_ID>
-      <Language>en</Language>
-      <Network>ABC</Network>
-      <NetworkID></NetworkID>
-      <Overview>Once Upon a Time revolves around Emma Swan, a 28-year-old bail bonds collector that has been supporting herself from when she was abandoned as a baby. Things change for her when her son Henry, who she gave up for adoption years ago, finds her and tells that he needs her help. He tells that she is really from a different world where she is Snow White's missing daughter. He shows that in the fairytale books, Prince Charming and Snow White sent her away to protect her. The Evil Queen cast a spell that trapped the fairytale world. Emma doesn't believe him and takes Henry back to Storybrooke....</Overview>
-      <Rating>8.2</Rating>
-      <RatingCount>31</RatingCount>
-      <Runtime>60</Runtime>
-      <SeriesID>80922</SeriesID>
-      <SeriesName>Once Upon a Time (2011)</SeriesName>
-      <Status>Continuing</Status>
-      <added>2011-05-18 00:14:25</added>
-      <addedBy>189361</addedBy>
-      <banner>graphical/248835-g11.jpg</banner>
-      <fanart>fanart/original/248835-6.jpg</fanart>
-      <lastupdated>1328897875</lastupdated>
-      <poster>posters/248835-1.jpg</poster>
-      <zap2it_id>EP01419478</zap2it_id>
-      </Series>
-    }
     series.seriesName := seriesElem[0].seriesName; // .getChildText('SeriesName');
-//    CodeSite.AddSeparator;
+
     CodeSite.SendMsg('Getting episodes for series: ' + series.seriesName);
 
     // parse the year this series was first aired
@@ -535,6 +499,9 @@ begin
 
 
   end;
+  finally
+    ms.Free;
+  end;
 end;
 
 function TTVDB.lookup: boolean;
@@ -543,7 +510,7 @@ var
   // tvdbMatch: TVDBMatcher;
   series: TTVDBSeries;
   tvdbMatch: TTVDBMatcher;
-  ep: TTVDBEpisode;
+  ep: ITVDBEpisode;
   dateStr: string;
   m: TMatch;
   bestMatch: TMatch;
@@ -663,7 +630,7 @@ begin
       dateStr := ''; // = null;
       for ep in tvdbMatch.containsTitleMatches do
       begin
-        if (ep.firstAired = '') then
+        if (ep.GetfirstAired = '') then
         begin // no valid date from tvdb... can't check this
           dateStr := '';
           break;
@@ -671,9 +638,9 @@ begin
 
         if (dateStr = '') then
         begin
-          dateStr := ep.firstAired; // init
+          dateStr := ep.GetfirstAired; // init
         end
-        else if (not dateStr.equals(ep.firstAired)) then
+        else if (not dateStr.equals(ep.GetfirstAired)) then
         begin
           dateStr := ''; // signals invalid because they dont all have the same date
           break;
@@ -726,8 +693,10 @@ begin
   begin
     if (Fe.hasRemoteId) then // maybe the remote id is wrong, try it based on series name
     begin
-      CodeSite.SendMsg(csmLevel7,'No match was found using exernal id(s) (' + Fe.getRemoteIds().values.ToString +
-        '), will try lookup based on series name now.');
+
+      CodeSite.SendMsg(csmLevel7,'No match was found using exernal id(s), will try lookup based on series name now.');
+//      CodeSite.SendMsg(csmLevel7,'No match was found using exernal id(s) (' + Fe.getRemoteIds().values.ToString +
+//        '), will try lookup based on series name now.');
       Fe.clearRemoteIds();
 
       findMatchingSeries(Fserieses);
