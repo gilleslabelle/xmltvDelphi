@@ -123,10 +123,10 @@ type
     ['{59E5DE7E-D93E-4D67-BC56-4F7320D01C86}']
     { Methods & Properties }
     function Add: IXMLChannelType;
-    function Insert(const Index: Integer): IXMLChannelType;
+    function Insert(const Index: NativeInt): IXMLChannelType;
 
-    function GetItem(Index: Integer): IXMLChannelType;
-    property Items[Index: Integer]: IXMLChannelType read GetItem; default;
+    function GetItem(Index: NativeInt): IXMLChannelType;
+    property Items[Index: NativeInt]: IXMLChannelType read GetItem; default;
   end;
 
 { IXMLDisplaynameType }
@@ -146,10 +146,10 @@ type
     ['{F65F3C4D-3022-49D5-94D0-C6739CF4EB40}']
     { Methods & Properties }
     function Add: IXMLDisplaynameType;
-    function Insert(const Index: Integer): IXMLDisplaynameType;
+    function Insert(const Index: NativeInt): IXMLDisplaynameType;
 
-    function GetItem(Index: Integer): IXMLDisplaynameType;
-    property Items[Index: Integer]: IXMLDisplaynameType read GetItem; default;
+    function GetItem(Index: NativeInt): IXMLDisplaynameType;
+    property Items[Index: NativeInt]: IXMLDisplaynameType read GetItem; default;
   end;
 
 { IXMLIconType }
@@ -175,10 +175,10 @@ type
     ['{CBA0053F-4DEE-4A50-85B6-517F69BE8250}']
     { Methods & Properties }
     function Add: IXMLIconType;
-    function Insert(const Index: Integer): IXMLIconType;
+    function Insert(const Index: NativeInt): IXMLIconType;
 
-    function GetItem(Index: Integer): IXMLIconType;
-    property Items[Index: Integer]: IXMLIconType read GetItem; default;
+    function GetItem(Index: NativeInt): IXMLIconType;
+    property Items[Index: NativeInt]: IXMLIconType read GetItem; default;
   end;
 
 { IXMLProgrammeType }
@@ -267,10 +267,10 @@ type
     ['{9C4BCFB4-7CD2-430E-85B3-B1F0804B52BE}']
     { Methods & Properties }
     function Add: IXMLProgrammeType;
-    function Insert(const Index: Integer): IXMLProgrammeType;
+    function Insert(const Index: NativeInt): IXMLProgrammeType;
 
-    function GetItem(Index: Integer): IXMLProgrammeType;
-    property Items[Index: Integer]: IXMLProgrammeType read GetItem; default;
+    function GetItem(Index: NativeInt): IXMLProgrammeType;
+    property Items[Index: NativeInt]: IXMLProgrammeType read GetItem; default;
   end;
 
 { IXMLTitleType }
@@ -290,10 +290,10 @@ type
     ['{FE48DF67-3CAF-4BE6-82C2-41EB352FF2CF}']
     { Methods & Properties }
     function Add: IXMLTitleType;
-    function Insert(const Index: Integer): IXMLTitleType;
+    function Insert(const Index: NativeInt): IXMLTitleType;
 
-    function GetItem(Index: Integer): IXMLTitleType;
-    property Items[Index: Integer]: IXMLTitleType read GetItem; default;
+    function GetItem(Index: NativeInt): IXMLTitleType;
+    property Items[Index: NativeInt]: IXMLTitleType read GetItem; default;
   end;
 
 { IXMLSubtitleType }
@@ -313,10 +313,10 @@ type
     ['{39E69454-FB94-4651-B626-B672C8B983A5}']
     { Methods & Properties }
     function Add: IXMLSubtitleType;
-    function Insert(const Index: Integer): IXMLSubtitleType;
+    function Insert(const Index: NativeInt): IXMLSubtitleType;
 
-    function GetItem(Index: Integer): IXMLSubtitleType;
-    property Items[Index: Integer]: IXMLSubtitleType read GetItem; default;
+    function GetItem(Index: NativeInt): IXMLSubtitleType;
+    property Items[Index: NativeInt]: IXMLSubtitleType read GetItem; default;
   end;
 
 { IXMLDescType }
@@ -336,10 +336,10 @@ type
     ['{2CB7A9DB-464B-4899-A01B-977EDFD44AA8}']
     { Methods & Properties }
     function Add: IXMLDescType;
-    function Insert(const Index: Integer): IXMLDescType;
+    function Insert(const Index: NativeInt): IXMLDescType;
 
-    function GetItem(Index: Integer): IXMLDescType;
-    property Items[Index: Integer]: IXMLDescType read GetItem; default;
+    function GetItem(Index: NativeInt): IXMLDescType;
+    property Items[Index: NativeInt]: IXMLDescType read GetItem; default;
 
     function GetItemByLangAttribute(value:string; addIfNotExist:Boolean): IXMLDescType;
   end;
@@ -389,10 +389,10 @@ type
     ['{47A7F7A9-6A0C-4729-BB28-4A3582CD1EA9}']
     { Methods & Properties }
     function Add: IXMLActorType;
-    function Insert(const Index: Integer): IXMLActorType;
+    function Insert(const Index: NativeInt): IXMLActorType;
 
-    function GetItem(Index: Integer): IXMLActorType;
-    property Items[Index: Integer]: IXMLActorType read GetItem; default;
+    function GetItem(Index: NativeInt): IXMLActorType;
+    property Items[Index: NativeInt]: IXMLActorType read GetItem; default;
   end;
 
 { IXMLCategoryType }
@@ -412,10 +412,10 @@ type
     ['{E33CBD12-65A5-46B9-939F-930A68E08104}']
     { Methods & Properties }
     function Add: IXMLCategoryType;
-    function Insert(const Index: Integer): IXMLCategoryType;
+    function Insert(const Index: NativeInt): IXMLCategoryType;
 
-    function GetItem(Index: Integer): IXMLCategoryType;
-    property Items[Index: Integer]: IXMLCategoryType read GetItem; default;
+    function GetItem(Index: NativeInt): IXMLCategoryType;
+    property Items[Index: NativeInt]: IXMLCategoryType read GetItem; default;
   end;
 
 { IXMLLanguageType }
@@ -468,10 +468,10 @@ type
     ['{A9284407-703B-48A6-9D4B-CBEC71A9C2A4}']
     { Methods & Properties }
     function Add: IXMLCountryType;
-    function Insert(const Index: Integer): IXMLCountryType;
+    function Insert(const Index: NativeInt): IXMLCountryType;
 
-    function GetItem(Index: Integer): IXMLCountryType;
-    property Items[Index: Integer]: IXMLCountryType read GetItem; default;
+    function GetItem(Index: NativeInt): IXMLCountryType;
+    property Items[Index: NativeInt]: IXMLCountryType read GetItem; default;
   end;
 
 { IXMLEpisodenumType }
@@ -491,10 +491,10 @@ type
     ['{701DCE98-E2FE-43CD-BF63-E6E75970B3D7}']
     { Methods & Properties }
     function Add: IXMLEpisodenumType;
-    function Insert(const Index: Integer): IXMLEpisodenumType;
+    function Insert(const Index: NativeInt): IXMLEpisodenumType;
 
-    function GetItem(Index: Integer): IXMLEpisodenumType;
-    property Items[Index: Integer]: IXMLEpisodenumType read GetItem; default;
+    function GetItem(Index: NativeInt): IXMLEpisodenumType;
+    property Items[Index: NativeInt]: IXMLEpisodenumType read GetItem; default;
 
     function GetItemBySystemAttribute(value:string; addIfNotExist:Boolean): IXMLEpisodenumType;
   end;
@@ -588,10 +588,10 @@ type
     ['{C0E59025-7AF3-405A-991F-73BEF40E9CC9}']
     { Methods & Properties }
     function Add: IXMLSubtitlesType;
-    function Insert(const Index: Integer): IXMLSubtitlesType;
+    function Insert(const Index: NativeInt): IXMLSubtitlesType;
 
-    function GetItem(Index: Integer): IXMLSubtitlesType;
-    property Items[Index: Integer]: IXMLSubtitlesType read GetItem; default;
+    function GetItem(Index: NativeInt): IXMLSubtitlesType;
+    property Items[Index: NativeInt]: IXMLSubtitlesType read GetItem; default;
   end;
 
 { IXMLRatingType }
@@ -616,10 +616,10 @@ type
     ['{45A63DCF-4B36-4344-A5E6-8A39992696BC}']
     { Methods & Properties }
     function Add: IXMLRatingType;
-    function Insert(const Index: Integer): IXMLRatingType;
+    function Insert(const Index: NativeInt): IXMLRatingType;
 
-    function GetItem(Index: Integer): IXMLRatingType;
-    property Items[Index: Integer]: IXMLRatingType read GetItem; default;
+    function GetItem(Index: NativeInt): IXMLRatingType;
+    property Items[Index: NativeInt]: IXMLRatingType read GetItem; default;
   end;
 
 { IXMLStarratingType }
@@ -644,10 +644,10 @@ type
     ['{D949D533-26DB-4C4F-8441-6268902C8C31}']
     { Methods & Properties }
     function Add: IXMLStarratingType;
-    function Insert(const Index: Integer): IXMLStarratingType;
+    function Insert(const Index: NativeInt): IXMLStarratingType;
 
-    function GetItem(Index: Integer): IXMLStarratingType;
-    property Items[Index: Integer]: IXMLStarratingType read GetItem; default;
+    function GetItem(Index: NativeInt): IXMLStarratingType;
+    property Items[Index: NativeInt]: IXMLStarratingType read GetItem; default;
   end;
 
 { IXMLReviewType }
@@ -673,10 +673,10 @@ type
     ['{C1F30970-1417-4C99-A788-2CACA5A69FC9}']
     { Methods & Properties }
     function Add: IXMLReviewType;
-    function Insert(const Index: Integer): IXMLReviewType;
+    function Insert(const Index: NativeInt): IXMLReviewType;
 
-    function GetItem(Index: Integer): IXMLReviewType;
-    property Items[Index: Integer]: IXMLReviewType read GetItem; default;
+    function GetItem(Index: NativeInt): IXMLReviewType;
+    property Items[Index: NativeInt]: IXMLReviewType read GetItem; default;
   end;
 
 { IXMLWriterTypeList }
@@ -685,10 +685,10 @@ type
     ['{509D23F2-D46F-452D-A2B3-3B0882F4E3EA}']
     { Methods & Properties }
     function Add(const Value: UnicodeString): IXMLNode;
-    function Insert(const Index: Integer; const Value: UnicodeString): IXMLNode;
+    function Insert(const Index: NativeInt; const Value: UnicodeString): IXMLNode;
 
-    function GetItem(Index: Integer): UnicodeString;
-    property Items[Index: Integer]: UnicodeString read GetItem; default;
+    function GetItem(Index: NativeInt): UnicodeString;
+    property Items[Index: NativeInt]: UnicodeString read GetItem; default;
   end;
 
 { IXMLAdapterTypeList }
@@ -697,10 +697,10 @@ type
     ['{E8A06464-8754-4C52-896F-3798B2007669}']
     { Methods & Properties }
     function Add(const Value: UnicodeString): IXMLNode;
-    function Insert(const Index: Integer; const Value: UnicodeString): IXMLNode;
+    function Insert(const Index: NativeInt; const Value: UnicodeString): IXMLNode;
 
-    function GetItem(Index: Integer): UnicodeString;
-    property Items[Index: Integer]: UnicodeString read GetItem; default;
+    function GetItem(Index: NativeInt): UnicodeString;
+    property Items[Index: NativeInt]: UnicodeString read GetItem; default;
   end;
 
 { IXMLPresenterTypeList }
@@ -709,10 +709,10 @@ type
     ['{6E02EC60-5C92-41D5-8AA4-4761F3CAD3E5}']
     { Methods & Properties }
     function Add(const Value: UnicodeString): IXMLNode;
-    function Insert(const Index: Integer; const Value: UnicodeString): IXMLNode;
+    function Insert(const Index: NativeInt; const Value: UnicodeString): IXMLNode;
 
-    function GetItem(Index: Integer): UnicodeString;
-    property Items[Index: Integer]: UnicodeString read GetItem; default;
+    function GetItem(Index: NativeInt): UnicodeString;
+    property Items[Index: NativeInt]: UnicodeString read GetItem; default;
   end;
 
 { IXMLUrlTypeList }
@@ -721,10 +721,10 @@ type
     ['{AF28E997-CA9D-4043-BA6E-6034F141012A}']
     { Methods & Properties }
     function Add(const Value: UnicodeString): IXMLNode;
-    function Insert(const Index: Integer; const Value: UnicodeString): IXMLNode;
+    function Insert(const Index: NativeInt; const Value: UnicodeString): IXMLNode;
 
-    function GetItem(Index: Integer): UnicodeString;
-    property Items[Index: Integer]: UnicodeString read GetItem; default;
+    function GetItem(Index: NativeInt): UnicodeString;
+    property Items[Index: NativeInt]: UnicodeString read GetItem; default;
   end;
 
 { IXMLCommentatorTypeList }
@@ -733,10 +733,10 @@ type
     ['{0400CBD7-289E-426B-803D-76D5B314DA28}']
     { Methods & Properties }
     function Add(const Value: UnicodeString): IXMLNode;
-    function Insert(const Index: Integer; const Value: UnicodeString): IXMLNode;
+    function Insert(const Index: NativeInt; const Value: UnicodeString): IXMLNode;
 
-    function GetItem(Index: Integer): UnicodeString;
-    property Items[Index: Integer]: UnicodeString read GetItem; default;
+    function GetItem(Index: NativeInt): UnicodeString;
+    property Items[Index: NativeInt]: UnicodeString read GetItem; default;
   end;
 
 { IXMLDirectorTypeList }
@@ -745,10 +745,10 @@ type
     ['{24FF9E90-8AB4-4BBD-85E2-F986B6E23403}']
     { Methods & Properties }
     function Add(const Value: UnicodeString): IXMLNode;
-    function Insert(const Index: Integer; const Value: UnicodeString): IXMLNode;
+    function Insert(const Index: NativeInt; const Value: UnicodeString): IXMLNode;
 
-    function GetItem(Index: Integer): UnicodeString;
-    property Items[Index: Integer]: UnicodeString read GetItem; default;
+    function GetItem(Index: NativeInt): UnicodeString;
+    property Items[Index: NativeInt]: UnicodeString read GetItem; default;
   end;
 
 { IXMLProducerTypeList }
@@ -757,10 +757,10 @@ type
     ['{3DC0DA70-61C8-4BA8-88DD-89DF01A95C66}']
     { Methods & Properties }
     function Add(const Value: UnicodeString): IXMLNode;
-    function Insert(const Index: Integer; const Value: UnicodeString): IXMLNode;
+    function Insert(const Index: NativeInt; const Value: UnicodeString): IXMLNode;
 
-    function GetItem(Index: Integer): UnicodeString;
-    property Items[Index: Integer]: UnicodeString read GetItem; default;
+    function GetItem(Index: NativeInt): UnicodeString;
+    property Items[Index: NativeInt]: UnicodeString read GetItem; default;
   end;
 
 { IXMLComposerTypeList }
@@ -769,10 +769,10 @@ type
     ['{6638DF67-870F-4316-AC1E-A4CC0613F009}']
     { Methods & Properties }
     function Add(const Value: UnicodeString): IXMLNode;
-    function Insert(const Index: Integer; const Value: UnicodeString): IXMLNode;
+    function Insert(const Index: NativeInt; const Value: UnicodeString): IXMLNode;
 
-    function GetItem(Index: Integer): UnicodeString;
-    property Items[Index: Integer]: UnicodeString read GetItem; default;
+    function GetItem(Index: NativeInt): UnicodeString;
+    property Items[Index: NativeInt]: UnicodeString read GetItem; default;
   end;
 
 { IXMLGuestTypeList }
@@ -781,10 +781,10 @@ type
     ['{CF5928C9-B72B-458C-89B6-950BCC503897}']
     { Methods & Properties }
     function Add(const Value: UnicodeString): IXMLNode;
-    function Insert(const Index: Integer; const Value: UnicodeString): IXMLNode;
+    function Insert(const Index: NativeInt; const Value: UnicodeString): IXMLNode;
 
-    function GetItem(Index: Integer): UnicodeString;
-    property Items[Index: Integer]: UnicodeString read GetItem; default;
+    function GetItem(Index: NativeInt): UnicodeString;
+    property Items[Index: NativeInt]: UnicodeString read GetItem; default;
   end;
 
 { IXMLEditorTypeList }
@@ -793,10 +793,10 @@ type
     ['{0875B106-1156-4239-84E2-145616BDCE60}']
     { Methods & Properties }
     function Add(const Value: UnicodeString): IXMLNode;
-    function Insert(const Index: Integer; const Value: UnicodeString): IXMLNode;
+    function Insert(const Index: NativeInt; const Value: UnicodeString): IXMLNode;
 
-    function GetItem(Index: Integer): UnicodeString;
-    property Items[Index: Integer]: UnicodeString read GetItem; default;
+    function GetItem(Index: NativeInt): UnicodeString;
+    property Items[Index: NativeInt]: UnicodeString read GetItem; default;
   end;
 
 { Forward Decls }
@@ -902,9 +902,9 @@ type
   protected
     { IXMLChannelTypeList }
     function Add: IXMLChannelType;
-    function Insert(const Index: Integer): IXMLChannelType;
+    function Insert(const Index: NativeInt): IXMLChannelType;
 
-    function GetItem(Index: Integer): IXMLChannelType;
+    function GetItem(Index: NativeInt): IXMLChannelType;
   end;
 
 { TXMLDisplaynameType }
@@ -922,9 +922,9 @@ type
   protected
     { IXMLDisplaynameTypeList }
     function Add: IXMLDisplaynameType;
-    function Insert(const Index: Integer): IXMLDisplaynameType;
+    function Insert(const Index: NativeInt): IXMLDisplaynameType;
 
-    function GetItem(Index: Integer): IXMLDisplaynameType;
+    function GetItem(Index: NativeInt): IXMLDisplaynameType;
   end;
 
 { TXMLIconType }
@@ -946,9 +946,9 @@ type
   protected
     { IXMLIconTypeList }
     function Add: IXMLIconType;
-    function Insert(const Index: Integer): IXMLIconType;
+    function Insert(const Index: NativeInt): IXMLIconType;
 
-    function GetItem(Index: Integer): IXMLIconType;
+    function GetItem(Index: NativeInt): IXMLIconType;
   end;
 
 { TXMLProgrammeType }
@@ -1020,9 +1020,9 @@ type
   protected
     { IXMLProgrammeTypeList }
     function Add: IXMLProgrammeType;
-    function Insert(const Index: Integer): IXMLProgrammeType;
+    function Insert(const Index: NativeInt): IXMLProgrammeType;
 
-    function GetItem(Index: Integer): IXMLProgrammeType;
+    function GetItem(Index: NativeInt): IXMLProgrammeType;
   end;
 
 { TXMLTitleType }
@@ -1040,9 +1040,9 @@ type
   protected
     { IXMLTitleTypeList }
     function Add: IXMLTitleType;
-    function Insert(const Index: Integer): IXMLTitleType;
+    function Insert(const Index: NativeInt): IXMLTitleType;
 
-    function GetItem(Index: Integer): IXMLTitleType;
+    function GetItem(Index: NativeInt): IXMLTitleType;
   end;
 
 { TXMLSubtitleType }
@@ -1060,9 +1060,9 @@ type
   protected
     { IXMLSubtitleTypeList }
     function Add: IXMLSubtitleType;
-    function Insert(const Index: Integer): IXMLSubtitleType;
+    function Insert(const Index: NativeInt): IXMLSubtitleType;
 
-    function GetItem(Index: Integer): IXMLSubtitleType;
+    function GetItem(Index: NativeInt): IXMLSubtitleType;
   end;
 
 { TXMLDescType }
@@ -1080,9 +1080,9 @@ type
   protected
     { IXMLDescTypeList }
     function Add: IXMLDescType;
-    function Insert(const Index: Integer): IXMLDescType;
+    function Insert(const Index: NativeInt): IXMLDescType;
 
-    function GetItem(Index: Integer): IXMLDescType;
+    function GetItem(Index: NativeInt): IXMLDescType;
     function GetItemByLangAttribute(value:string; addIfNotExist:Boolean): IXMLDescType;
 
   end;
@@ -1132,9 +1132,9 @@ type
   protected
     { IXMLActorTypeList }
     function Add: IXMLActorType;
-    function Insert(const Index: Integer): IXMLActorType;
+    function Insert(const Index: NativeInt): IXMLActorType;
 
-    function GetItem(Index: Integer): IXMLActorType;
+    function GetItem(Index: NativeInt): IXMLActorType;
   end;
 
 { TXMLCategoryType }
@@ -1152,9 +1152,9 @@ type
   protected
     { IXMLCategoryTypeList }
     function Add: IXMLCategoryType;
-    function Insert(const Index: Integer): IXMLCategoryType;
+    function Insert(const Index: NativeInt): IXMLCategoryType;
 
-    function GetItem(Index: Integer): IXMLCategoryType;
+    function GetItem(Index: NativeInt): IXMLCategoryType;
   end;
 
 { TXMLLanguageType }
@@ -1199,9 +1199,9 @@ type
   protected
     { IXMLCountryTypeList }
     function Add: IXMLCountryType;
-    function Insert(const Index: Integer): IXMLCountryType;
+    function Insert(const Index: NativeInt): IXMLCountryType;
 
-    function GetItem(Index: Integer): IXMLCountryType;
+    function GetItem(Index: NativeInt): IXMLCountryType;
   end;
 
 { TXMLEpisodenumType }
@@ -1219,9 +1219,9 @@ type
   protected
     { IXMLEpisodenumTypeList }
     function Add: IXMLEpisodenumType;
-    function Insert(const Index: Integer): IXMLEpisodenumType;
+    function Insert(const Index: NativeInt): IXMLEpisodenumType;
 
-    function GetItem(Index: Integer): IXMLEpisodenumType;
+    function GetItem(Index: NativeInt): IXMLEpisodenumType;
     function GetItemBySystemAttribute(value:string; addIfNotExist:Boolean): IXMLEpisodenumType;
 
   end;
@@ -1299,9 +1299,9 @@ type
   protected
     { IXMLSubtitlesTypeList }
     function Add: IXMLSubtitlesType;
-    function Insert(const Index: Integer): IXMLSubtitlesType;
+    function Insert(const Index: NativeInt): IXMLSubtitlesType;
 
-    function GetItem(Index: Integer): IXMLSubtitlesType;
+    function GetItem(Index: NativeInt): IXMLSubtitlesType;
   end;
 
 { TXMLRatingType }
@@ -1326,9 +1326,9 @@ type
   protected
     { IXMLRatingTypeList }
     function Add: IXMLRatingType;
-    function Insert(const Index: Integer): IXMLRatingType;
+    function Insert(const Index: NativeInt): IXMLRatingType;
 
-    function GetItem(Index: Integer): IXMLRatingType;
+    function GetItem(Index: NativeInt): IXMLRatingType;
   end;
 
 { TXMLStarratingType }
@@ -1353,9 +1353,9 @@ type
   protected
     { IXMLStarratingTypeList }
     function Add: IXMLStarratingType;
-    function Insert(const Index: Integer): IXMLStarratingType;
+    function Insert(const Index: NativeInt): IXMLStarratingType;
 
-    function GetItem(Index: Integer): IXMLStarratingType;
+    function GetItem(Index: NativeInt): IXMLStarratingType;
   end;
 
 { TXMLReviewType }
@@ -1377,9 +1377,9 @@ type
   protected
     { IXMLReviewTypeList }
     function Add: IXMLReviewType;
-    function Insert(const Index: Integer): IXMLReviewType;
+    function Insert(const Index: NativeInt): IXMLReviewType;
 
-    function GetItem(Index: Integer): IXMLReviewType;
+    function GetItem(Index: NativeInt): IXMLReviewType;
   end;
 
 { TXMLWriterTypeList }
@@ -1388,9 +1388,9 @@ type
   protected
     { IXMLWriterTypeList }
     function Add(const Value: UnicodeString): IXMLNode;
-    function Insert(const Index: Integer; const Value: UnicodeString): IXMLNode;
+    function Insert(const Index: NativeInt; const Value: UnicodeString): IXMLNode;
 
-    function GetItem(Index: Integer): UnicodeString;
+    function GetItem(Index: NativeInt): UnicodeString;
   end;
 
 { TXMLAdapterTypeList }
@@ -1399,9 +1399,9 @@ type
   protected
     { IXMLAdapterTypeList }
     function Add(const Value: UnicodeString): IXMLNode;
-    function Insert(const Index: Integer; const Value: UnicodeString): IXMLNode;
+    function Insert(const Index: NativeInt; const Value: UnicodeString): IXMLNode;
 
-    function GetItem(Index: Integer): UnicodeString;
+    function GetItem(Index: NativeInt): UnicodeString;
   end;
 
 { TXMLPresenterTypeList }
@@ -1410,9 +1410,9 @@ type
   protected
     { IXMLPresenterTypeList }
     function Add(const Value: UnicodeString): IXMLNode;
-    function Insert(const Index: Integer; const Value: UnicodeString): IXMLNode;
+    function Insert(const Index: NativeInt; const Value: UnicodeString): IXMLNode;
 
-    function GetItem(Index: Integer): UnicodeString;
+    function GetItem(Index: NativeInt): UnicodeString;
   end;
 
 { TXMLUrlTypeList }
@@ -1421,9 +1421,9 @@ type
   protected
     { IXMLUrlTypeList }
     function Add(const Value: UnicodeString): IXMLNode;
-    function Insert(const Index: Integer; const Value: UnicodeString): IXMLNode;
+    function Insert(const Index: NativeInt; const Value: UnicodeString): IXMLNode;
 
-    function GetItem(Index: Integer): UnicodeString;
+    function GetItem(Index: NativeInt): UnicodeString;
   end;
 
 { TXMLCommentatorTypeList }
@@ -1432,9 +1432,9 @@ type
   protected
     { IXMLCommentatorTypeList }
     function Add(const Value: UnicodeString): IXMLNode;
-    function Insert(const Index: Integer; const Value: UnicodeString): IXMLNode;
+    function Insert(const Index: NativeInt; const Value: UnicodeString): IXMLNode;
 
-    function GetItem(Index: Integer): UnicodeString;
+    function GetItem(Index: NativeInt): UnicodeString;
   end;
 
 { TXMLDirectorTypeList }
@@ -1443,9 +1443,9 @@ type
   protected
     { IXMLDirectorTypeList }
     function Add(const Value: UnicodeString): IXMLNode;
-    function Insert(const Index: Integer; const Value: UnicodeString): IXMLNode;
+    function Insert(const Index: NativeInt; const Value: UnicodeString): IXMLNode;
 
-    function GetItem(Index: Integer): UnicodeString;
+    function GetItem(Index: NativeInt): UnicodeString;
   end;
 
 { TXMLProducerTypeList }
@@ -1454,9 +1454,9 @@ type
   protected
     { IXMLProducerTypeList }
     function Add(const Value: UnicodeString): IXMLNode;
-    function Insert(const Index: Integer; const Value: UnicodeString): IXMLNode;
+    function Insert(const Index: NativeInt; const Value: UnicodeString): IXMLNode;
 
-    function GetItem(Index: Integer): UnicodeString;
+    function GetItem(Index: NativeInt): UnicodeString;
   end;
 
 { TXMLComposerTypeList }
@@ -1465,9 +1465,9 @@ type
   protected
     { IXMLComposerTypeList }
     function Add(const Value: UnicodeString): IXMLNode;
-    function Insert(const Index: Integer; const Value: UnicodeString): IXMLNode;
+    function Insert(const Index: NativeInt; const Value: UnicodeString): IXMLNode;
 
-    function GetItem(Index: Integer): UnicodeString;
+    function GetItem(Index: NativeInt): UnicodeString;
   end;
 
 { TXMLGuestTypeList }
@@ -1476,9 +1476,9 @@ type
   protected
     { IXMLGuestTypeList }
     function Add(const Value: UnicodeString): IXMLNode;
-    function Insert(const Index: Integer; const Value: UnicodeString): IXMLNode;
+    function Insert(const Index: NativeInt; const Value: UnicodeString): IXMLNode;
 
-    function GetItem(Index: Integer): UnicodeString;
+    function GetItem(Index: NativeInt): UnicodeString;
   end;
 
 { TXMLEditorTypeList }
@@ -1487,9 +1487,9 @@ type
   protected
     { IXMLEditorTypeList }
     function Add(const Value: UnicodeString): IXMLNode;
-    function Insert(const Index: Integer; const Value: UnicodeString): IXMLNode;
+    function Insert(const Index: NativeInt; const Value: UnicodeString): IXMLNode;
 
-    function GetItem(Index: Integer): UnicodeString;
+    function GetItem(Index: NativeInt): UnicodeString;
   end;
 
 { Global Functions }
@@ -1648,12 +1648,12 @@ begin
   Result := AddItem(-1) as IXMLChannelType;
 end;
 
-function TXMLChannelTypeList.Insert(const Index: Integer): IXMLChannelType;
+function TXMLChannelTypeList.Insert(const Index: NativeInt): IXMLChannelType;
 begin
   Result := AddItem(Index) as IXMLChannelType;
 end;
 
-function TXMLChannelTypeList.GetItem(Index: Integer): IXMLChannelType;
+function TXMLChannelTypeList.GetItem(Index: NativeInt): IXMLChannelType;
 begin
   Result := List[Index] as IXMLChannelType;
 end;
@@ -1677,12 +1677,12 @@ begin
   Result := AddItem(-1) as IXMLDisplaynameType;
 end;
 
-function TXMLDisplaynameTypeList.Insert(const Index: Integer): IXMLDisplaynameType;
+function TXMLDisplaynameTypeList.Insert(const Index: NativeInt): IXMLDisplaynameType;
 begin
   Result := AddItem(Index) as IXMLDisplaynameType;
 end;
 
-function TXMLDisplaynameTypeList.GetItem(Index: Integer): IXMLDisplaynameType;
+function TXMLDisplaynameTypeList.GetItem(Index: NativeInt): IXMLDisplaynameType;
 begin
   Result := List[Index] as IXMLDisplaynameType;
 end;
@@ -1726,12 +1726,12 @@ begin
   Result := AddItem(-1) as IXMLIconType;
 end;
 
-function TXMLIconTypeList.Insert(const Index: Integer): IXMLIconType;
+function TXMLIconTypeList.Insert(const Index: NativeInt): IXMLIconType;
 begin
   Result := AddItem(Index) as IXMLIconType;
 end;
 
-function TXMLIconTypeList.GetItem(Index: Integer): IXMLIconType;
+function TXMLIconTypeList.GetItem(Index: NativeInt): IXMLIconType;
 begin
   Result := List[Index] as IXMLIconType;
 end;
@@ -1987,12 +1987,12 @@ begin
   Result := AddItem(-1) as IXMLProgrammeType;
 end;
 
-function TXMLProgrammeTypeList.Insert(const Index: Integer): IXMLProgrammeType;
+function TXMLProgrammeTypeList.Insert(const Index: NativeInt): IXMLProgrammeType;
 begin
   Result := AddItem(Index) as IXMLProgrammeType;
 end;
 
-function TXMLProgrammeTypeList.GetItem(Index: Integer): IXMLProgrammeType;
+function TXMLProgrammeTypeList.GetItem(Index: NativeInt): IXMLProgrammeType;
 begin
   Result := List[Index] as IXMLProgrammeType;
 end;
@@ -2016,12 +2016,12 @@ begin
   Result := AddItem(-1) as IXMLTitleType;
 end;
 
-function TXMLTitleTypeList.Insert(const Index: Integer): IXMLTitleType;
+function TXMLTitleTypeList.Insert(const Index: NativeInt): IXMLTitleType;
 begin
   Result := AddItem(Index) as IXMLTitleType;
 end;
 
-function TXMLTitleTypeList.GetItem(Index: Integer): IXMLTitleType;
+function TXMLTitleTypeList.GetItem(Index: NativeInt): IXMLTitleType;
 begin
   Result := List[Index] as IXMLTitleType;
 end;
@@ -2045,12 +2045,12 @@ begin
   Result := AddItem(-1) as IXMLSubtitleType;
 end;
 
-function TXMLSubtitleTypeList.Insert(const Index: Integer): IXMLSubtitleType;
+function TXMLSubtitleTypeList.Insert(const Index: NativeInt): IXMLSubtitleType;
 begin
   Result := AddItem(Index) as IXMLSubtitleType;
 end;
 
-function TXMLSubtitleTypeList.GetItem(Index: Integer): IXMLSubtitleType;
+function TXMLSubtitleTypeList.GetItem(Index: NativeInt): IXMLSubtitleType;
 begin
   Result := List[Index] as IXMLSubtitleType;
 end;
@@ -2074,19 +2074,19 @@ begin
   Result := AddItem(-1) as IXMLDescType;
 end;
 
-function TXMLDescTypeList.Insert(const Index: Integer): IXMLDescType;
+function TXMLDescTypeList.Insert(const Index: NativeInt): IXMLDescType;
 begin
   Result := AddItem(Index) as IXMLDescType;
 end;
 
-function TXMLDescTypeList.GetItem(Index: Integer): IXMLDescType;
+function TXMLDescTypeList.GetItem(Index: NativeInt): IXMLDescType;
 begin
   Result := List[Index] as IXMLDescType;
 end;
 
 function TXMLDescTypeList.GetItemByLangAttribute(value: string; addIfNotExist: Boolean): IXMLDescType;
 var
-  I: Integer;
+  I: NativeInt;
 begin
   Result := nil;
   for I := 0  to Self.Count-1 do
@@ -2200,12 +2200,12 @@ begin
   Result := AddItem(-1) as IXMLActorType;
 end;
 
-function TXMLActorTypeList.Insert(const Index: Integer): IXMLActorType;
+function TXMLActorTypeList.Insert(const Index: NativeInt): IXMLActorType;
 begin
   Result := AddItem(Index) as IXMLActorType;
 end;
 
-function TXMLActorTypeList.GetItem(Index: Integer): IXMLActorType;
+function TXMLActorTypeList.GetItem(Index: NativeInt): IXMLActorType;
 begin
   Result := List[Index] as IXMLActorType;
 end;
@@ -2229,12 +2229,12 @@ begin
   Result := AddItem(-1) as IXMLCategoryType;
 end;
 
-function TXMLCategoryTypeList.Insert(const Index: Integer): IXMLCategoryType;
+function TXMLCategoryTypeList.Insert(const Index: NativeInt): IXMLCategoryType;
 begin
   Result := AddItem(Index) as IXMLCategoryType;
 end;
 
-function TXMLCategoryTypeList.GetItem(Index: Integer): IXMLCategoryType;
+function TXMLCategoryTypeList.GetItem(Index: NativeInt): IXMLCategoryType;
 begin
   Result := List[Index] as IXMLCategoryType;
 end;
@@ -2294,12 +2294,12 @@ begin
   Result := AddItem(-1) as IXMLCountryType;
 end;
 
-function TXMLCountryTypeList.Insert(const Index: Integer): IXMLCountryType;
+function TXMLCountryTypeList.Insert(const Index: NativeInt): IXMLCountryType;
 begin
   Result := AddItem(Index) as IXMLCountryType;
 end;
 
-function TXMLCountryTypeList.GetItem(Index: Integer): IXMLCountryType;
+function TXMLCountryTypeList.GetItem(Index: NativeInt): IXMLCountryType;
 begin
   Result := List[Index] as IXMLCountryType;
 end;
@@ -2323,19 +2323,19 @@ begin
   Result := AddItem(-1) as IXMLEpisodenumType;
 end;
 
-function TXMLEpisodenumTypeList.Insert(const Index: Integer): IXMLEpisodenumType;
+function TXMLEpisodenumTypeList.Insert(const Index: NativeInt): IXMLEpisodenumType;
 begin
   Result := AddItem(Index) as IXMLEpisodenumType;
 end;
 
-function TXMLEpisodenumTypeList.GetItem(Index: Integer): IXMLEpisodenumType;
+function TXMLEpisodenumTypeList.GetItem(Index: NativeInt): IXMLEpisodenumType;
 begin
   Result := List[Index] as IXMLEpisodenumType;
 end;
 
 function TXMLEpisodenumTypeList.GetItemBySystemAttribute(value: string; addIfNotExist:Boolean): IXMLEpisodenumType;
 var
-  I: Integer;
+  I: NativeInt;
 begin
   Result := nil;
   for I := 0  to Self.Count-1 do
@@ -2505,12 +2505,12 @@ begin
   Result := AddItem(-1) as IXMLSubtitlesType;
 end;
 
-function TXMLSubtitlesTypeList.Insert(const Index: Integer): IXMLSubtitlesType;
+function TXMLSubtitlesTypeList.Insert(const Index: NativeInt): IXMLSubtitlesType;
 begin
   Result := AddItem(Index) as IXMLSubtitlesType;
 end;
 
-function TXMLSubtitlesTypeList.GetItem(Index: Integer): IXMLSubtitlesType;
+function TXMLSubtitlesTypeList.GetItem(Index: NativeInt): IXMLSubtitlesType;
 begin
   Result := List[Index] as IXMLSubtitlesType;
 end;
@@ -2556,12 +2556,12 @@ begin
   Result := AddItem(-1) as IXMLRatingType;
 end;
 
-function TXMLRatingTypeList.Insert(const Index: Integer): IXMLRatingType;
+function TXMLRatingTypeList.Insert(const Index: NativeInt): IXMLRatingType;
 begin
   Result := AddItem(Index) as IXMLRatingType;
 end;
 
-function TXMLRatingTypeList.GetItem(Index: Integer): IXMLRatingType;
+function TXMLRatingTypeList.GetItem(Index: NativeInt): IXMLRatingType;
 begin
   Result := List[Index] as IXMLRatingType;
 end;
@@ -2607,12 +2607,12 @@ begin
   Result := AddItem(-1) as IXMLStarratingType;
 end;
 
-function TXMLStarratingTypeList.Insert(const Index: Integer): IXMLStarratingType;
+function TXMLStarratingTypeList.Insert(const Index: NativeInt): IXMLStarratingType;
 begin
   Result := AddItem(Index) as IXMLStarratingType;
 end;
 
-function TXMLStarratingTypeList.GetItem(Index: Integer): IXMLStarratingType;
+function TXMLStarratingTypeList.GetItem(Index: NativeInt): IXMLStarratingType;
 begin
   Result := List[Index] as IXMLStarratingType;
 end;
@@ -2656,12 +2656,12 @@ begin
   Result := AddItem(-1) as IXMLReviewType;
 end;
 
-function TXMLReviewTypeList.Insert(const Index: Integer): IXMLReviewType;
+function TXMLReviewTypeList.Insert(const Index: NativeInt): IXMLReviewType;
 begin
   Result := AddItem(Index) as IXMLReviewType;
 end;
 
-function TXMLReviewTypeList.GetItem(Index: Integer): IXMLReviewType;
+function TXMLReviewTypeList.GetItem(Index: NativeInt): IXMLReviewType;
 begin
   Result := List[Index] as IXMLReviewType;
 end;
@@ -2674,13 +2674,13 @@ begin
   Result.NodeValue := Value;
 end;
 
-function TXMLWriterTypeList.Insert(const Index: Integer; const Value: UnicodeString): IXMLNode;
+function TXMLWriterTypeList.Insert(const Index: NativeInt; const Value: UnicodeString): IXMLNode;
 begin
   Result := AddItem(Index);
   Result.NodeValue := Value;
 end;
 
-function TXMLWriterTypeList.GetItem(Index: Integer): UnicodeString;
+function TXMLWriterTypeList.GetItem(Index: NativeInt): UnicodeString;
 begin
   Result := List[Index].NodeValue;
 end;
@@ -2693,13 +2693,13 @@ begin
   Result.NodeValue := Value;
 end;
 
-function TXMLAdapterTypeList.Insert(const Index: Integer; const Value: UnicodeString): IXMLNode;
+function TXMLAdapterTypeList.Insert(const Index: NativeInt; const Value: UnicodeString): IXMLNode;
 begin
   Result := AddItem(Index);
   Result.NodeValue := Value;
 end;
 
-function TXMLAdapterTypeList.GetItem(Index: Integer): UnicodeString;
+function TXMLAdapterTypeList.GetItem(Index: NativeInt): UnicodeString;
 begin
   Result := List[Index].NodeValue;
 end;
@@ -2712,13 +2712,13 @@ begin
   Result.NodeValue := Value;
 end;
 
-function TXMLPresenterTypeList.Insert(const Index: Integer; const Value: UnicodeString): IXMLNode;
+function TXMLPresenterTypeList.Insert(const Index: NativeInt; const Value: UnicodeString): IXMLNode;
 begin
   Result := AddItem(Index);
   Result.NodeValue := Value;
 end;
 
-function TXMLPresenterTypeList.GetItem(Index: Integer): UnicodeString;
+function TXMLPresenterTypeList.GetItem(Index: NativeInt): UnicodeString;
 begin
   Result := List[Index].NodeValue;
 end;
@@ -2731,13 +2731,13 @@ begin
   Result.NodeValue := Value;
 end;
 
-function TXMLUrlTypeList.Insert(const Index: Integer; const Value: UnicodeString): IXMLNode;
+function TXMLUrlTypeList.Insert(const Index: NativeInt; const Value: UnicodeString): IXMLNode;
 begin
   Result := AddItem(Index);
   Result.NodeValue := Value;
 end;
 
-function TXMLUrlTypeList.GetItem(Index: Integer): UnicodeString;
+function TXMLUrlTypeList.GetItem(Index: NativeInt): UnicodeString;
 begin
   Result := List[Index].NodeValue;
 end;
@@ -2750,13 +2750,13 @@ begin
   Result.NodeValue := Value;
 end;
 
-function TXMLCommentatorTypeList.Insert(const Index: Integer; const Value: UnicodeString): IXMLNode;
+function TXMLCommentatorTypeList.Insert(const Index: NativeInt; const Value: UnicodeString): IXMLNode;
 begin
   Result := AddItem(Index);
   Result.NodeValue := Value;
 end;
 
-function TXMLCommentatorTypeList.GetItem(Index: Integer): UnicodeString;
+function TXMLCommentatorTypeList.GetItem(Index: NativeInt): UnicodeString;
 begin
   Result := List[Index].NodeValue;
 end;
@@ -2769,13 +2769,13 @@ begin
   Result.NodeValue := Value;
 end;
 
-function TXMLDirectorTypeList.Insert(const Index: Integer; const Value: UnicodeString): IXMLNode;
+function TXMLDirectorTypeList.Insert(const Index: NativeInt; const Value: UnicodeString): IXMLNode;
 begin
   Result := AddItem(Index);
   Result.NodeValue := Value;
 end;
 
-function TXMLDirectorTypeList.GetItem(Index: Integer): UnicodeString;
+function TXMLDirectorTypeList.GetItem(Index: NativeInt): UnicodeString;
 begin
   Result := List[Index].NodeValue;
 end;
@@ -2788,13 +2788,13 @@ begin
   Result.NodeValue := Value;
 end;
 
-function TXMLProducerTypeList.Insert(const Index: Integer; const Value: UnicodeString): IXMLNode;
+function TXMLProducerTypeList.Insert(const Index: NativeInt; const Value: UnicodeString): IXMLNode;
 begin
   Result := AddItem(Index);
   Result.NodeValue := Value;
 end;
 
-function TXMLProducerTypeList.GetItem(Index: Integer): UnicodeString;
+function TXMLProducerTypeList.GetItem(Index: NativeInt): UnicodeString;
 begin
   Result := List[Index].NodeValue;
 end;
@@ -2807,13 +2807,13 @@ begin
   Result.NodeValue := Value;
 end;
 
-function TXMLComposerTypeList.Insert(const Index: Integer; const Value: UnicodeString): IXMLNode;
+function TXMLComposerTypeList.Insert(const Index: NativeInt; const Value: UnicodeString): IXMLNode;
 begin
   Result := AddItem(Index);
   Result.NodeValue := Value;
 end;
 
-function TXMLComposerTypeList.GetItem(Index: Integer): UnicodeString;
+function TXMLComposerTypeList.GetItem(Index: NativeInt): UnicodeString;
 begin
   Result := List[Index].NodeValue;
 end;
@@ -2826,13 +2826,13 @@ begin
   Result.NodeValue := Value;
 end;
 
-function TXMLGuestTypeList.Insert(const Index: Integer; const Value: UnicodeString): IXMLNode;
+function TXMLGuestTypeList.Insert(const Index: NativeInt; const Value: UnicodeString): IXMLNode;
 begin
   Result := AddItem(Index);
   Result.NodeValue := Value;
 end;
 
-function TXMLGuestTypeList.GetItem(Index: Integer): UnicodeString;
+function TXMLGuestTypeList.GetItem(Index: NativeInt): UnicodeString;
 begin
   Result := List[Index].NodeValue;
 end;
@@ -2845,13 +2845,13 @@ begin
   Result.NodeValue := Value;
 end;
 
-function TXMLEditorTypeList.Insert(const Index: Integer; const Value: UnicodeString): IXMLNode;
+function TXMLEditorTypeList.Insert(const Index: NativeInt; const Value: UnicodeString): IXMLNode;
 begin
   Result := AddItem(Index);
   Result.NodeValue := Value;
 end;
 
-function TXMLEditorTypeList.GetItem(Index: Integer): UnicodeString;
+function TXMLEditorTypeList.GetItem(Index: NativeInt): UnicodeString;
 begin
   Result := List[Index].NodeValue;
 end;

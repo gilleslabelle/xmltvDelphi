@@ -8,7 +8,7 @@
 {*  
 {*******************************************************}
 
-unit uMatchAccuracy;
+unit xmltvdb.MatchAccuracy;
 
 interface
 

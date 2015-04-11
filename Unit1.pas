@@ -8,7 +8,7 @@ uses
   System.Bindings.Outputs, Vcl.Bind.Editors, Data.Bind.EngExt,
   Vcl.Bind.DBEngExt, Vcl.StdCtrls, Vcl.ExtCtrls, Data.Bind.Components,
   REST.Client, Data.Bind.ObjectScope, CodeSiteLogging, xmltvBind,
-  System.Generics.Collections, uTVDB, Xml.xmldom, Vcl.ComCtrls;
+  System.Generics.Collections,  Xml.xmldom, Vcl.ComCtrls, xmltv.Gracenote;
 
 type
   TConfig = record
@@ -32,6 +32,8 @@ type
     { Private declarations }
     FConfig: TConfig;
     category: string;
+
+//    FGracenoteProgramColl:TGracenoteProgramColl;
     procedure processXMLTVFile(xmlFile: TFileName);
     function findDescChildElementByAttributeValue(programElem: IXMLProgrammeType; lang: string): IXMLDescType;
     function getZap2ItId(programElem: IXMLProgrammeType): string;
@@ -49,29 +51,41 @@ var
 implementation
 
 uses System.JSON, Soap.XSBuiltIns, System.DateUtils, Xml.XMLIntf,
-  Xml.XMLDoc, uConts, uSeriesTracker, uTVDBSeries, REST.Utils, uEpisode,
-  uTVDBBind, uDataModule;
+  Xml.XMLDoc, uConts,  REST.Utils,   uDataModule, xmltvdb.tvdb,
+  xmltvdb.SeriesTracker, xmltvdb.TVDBSeries, xmltvdb.Episode,
+  xmltvdb.DateUtils;
 
 // , Winapi.MSXMLIntf,ComObj,MSXML, NativeXmlXPath;
 // uses msxmldom;
 {$R *.dfm}
 
 procedure TForm1.FormCreate(Sender: TObject);
+var
+code:string;
 begin
+
+  code:= SHA1FromString('hYf8RT46keX');
+
+  codesite.Send(code.ToLower);
+
+//  TGraceNote.GetNext14Days; //(FGracenoteProgramColl);
+
   FConfig.init;
-  FConfig.ONLY_LOOKUP_SCHEDULED_SHOWS := false;
+  FConfig.ONLY_LOOKUP_SCHEDULED_SHOWS := true;
   FConfig.ZAP2IT_SOURCE_INFO_NAMES := ('Zap2it|Schedules Direct').ToLower;
   FConfig.MOVIE_CATEGORIES := ('Movie|Movies|Films').ToLower;
 
   FConfig.EXCLUDED_CATEGORIES := ('Paid Programming|Talk Show|Weather|Sports').ToLower;
 
   FConfig.TVDB_TRANSLATIONS.Add(('Dragons'' Den').ToLower, '116811');
-  // Xml.Win.msxmldom.MSXMLDOMDocumentFactory.AddDOMProperty('ProhibitDTD', False);
+  FConfig.TVDB_TRANSLATIONS.Add(('19-2').ToLower, '216271');
+
 
 end;
 
 procedure TForm1.FormDestroy(Sender: TObject);
 begin
+//FGracenoteProgramColl.Free;
   FConfig.Free;
 end;
 
@@ -123,30 +137,20 @@ var
 
   whatToLookUp: TStringList;
   scheduleType: Integer;
-//  JSON: string;
-
-//  arr: TJSONArray;
-  I: Integer;
-//  obj: TJSONValue;
-//  title: string;
-//  subtitle: string;
-  // programElem :IXMLNode;
+  I: NativeInt;// Integer;
   sourceInfoName: string;
   isZap2It: Boolean;
-  totalPrograms: Integer;
-  successCount: Integer;
-  failCount: Integer;
-  progCount: Integer;
+  totalPrograms: NativeInt;//Integer;
+  successCount: NativeInt;//Integer;
+  failCount: NativeInt;//Integer;
+  progCount: NativeInt;//Integer;
   seriesName: string;
   isMovie: Boolean;
   overRiddenSeriesName: string;
-  // programElem: IDOMNode;
-//  qq: Integer;
-//  jj: Integer;
-  idx: Integer;
+  idx: NativeInt;//Integer;
   successfulLookup: Boolean;
   tvdb: TTVDB;
-  st: TSeriesTracker;
+  st: ISeriesTracker;
   xmltv: IXMLTvType;
   programs: IXMLProgrammeTypeList;
   programElem: IXMLProgrammeType;
@@ -157,21 +161,17 @@ var
   episodeTitle: string;
   dateElem: string;
   LaDate: TDateTime;
-
   lang: string;
-//  idxDesc: Integer;
   currentDesc: string;
   y: Word;
   strOrigAirDate: string;
   additionalInfo: string;
   newDesc: string;
   currentDescLang: IXMLDescType;
-  // seriesTracker:  SeriesTracker ;
-
-  seriesTrackers: TSeriesTrackerColl;
-  UnseriesTracker: TSeriesTracker;
+  seriesTrackers: TSeriesTrackerHashColl;
+  UnseriesTracker: ISeriesTracker;
   knownTVDBId: Integer;
-  tvdbSeries: TTVDBSeries;
+  tvdbSeries: ITVDBSeries;
   guideEpisode: IEpisode;
   zap2ItId: string;
   displayValue: string;
@@ -180,10 +180,14 @@ var
   seriesYear: string;
   doc: IXMLDocument;
   BreakContinue: Boolean;
-  jsonvalue: TJSONValue;
+  seriesTrackersList: TSeriesTrackerColl;
+  StartTimeElem: string;
+  ms_progidElem: IXMLEpisodenumType;
+  idxEpisodeNum:NativeInt;// Integer;
+//  StartTime:TUTCDateTime;
 begin
 
-  // HTTP.cleanCache();//clean out any cached xml or HTTP requests before starting
+
   CodeSite.Clear; // cleans historical logs and resets current logs
   CodeSite.SendMsg('Processing: ' + ExpandFileName(xmlFile));
 
@@ -195,30 +199,16 @@ begin
     DeleteFile(inputXMLFile);
   end;
   CopyFile(pchar(xmlFile), pchar(inputXMLFile), False);
-  // end
-  // else
-  // begin
-  // CodeSite.SendError( 'Failed to move xml file to '+ XMLTVS_DIR +' directory...');
-  // exit;
-  // end;
 
   whatToLookUp := TStringList.Create;
   doc := TXMLDocument.Create(nil);
   try
     begin
 
-
       doc.LoadFromFile(inputXMLFile);
-      // doc.Options := doc.Options +[doAutoSave];
 
       xmltv := xmltvBind.Gettv(doc);
 
-
-      // xmltv :=  xmltvBind.Loadtv(inputXMLFile);
-
-
-      // root:= xmltv.DocumentElement;
-      // Element root = xmltv.getRootElement();
 
       whatToLookUp.Clear;
       if (FConfig.ONLY_LOOKUP_SCHEDULED_SHOWS) then
@@ -231,7 +221,6 @@ begin
 
         DatamoduleMain.GetNextRecordTitles(scheduleType, whatToLookUp);
       end;
-      //
 
       programs := xmltv.Programme;
 
@@ -245,9 +234,7 @@ begin
       begin
         CodeSite.SendMsg('This XMLTV is not a Zap2It source: ' + sourceInfoName);
       end;
-      //
-      // HashMap<String,SeriesTracker> seriesTrackers = new LinkedHashMap<>();
-      seriesTrackers := TSeriesTrackerColl.Create;
+      seriesTrackers := TSeriesTrackerHashColl.Create;
 
       totalPrograms := programs.Count;
       successCount := 0;
@@ -284,8 +271,6 @@ begin
               progCount.ToString + '...');
 
             Continue;
-
-            // continue programSearch;
           end;
 
           // check for over-ride based on series name
@@ -300,7 +285,7 @@ begin
           //
           isMovie := False;
           categories := programElem.category;
-          // categories:=   TXMLNodeHelper.SelectNodes( programElem,'category');
+
           BreakContinue := False;
           for idx := 0 to categories.Count - 1 do
           begin
@@ -312,7 +297,6 @@ begin
               CodeSite.SendMsg('Skipping program because its category is excluded (' + category + '): ' + seriesName);
               BreakContinue := true;
               break;
-              // Continue; // programSearch;
             end;
 
             if (not isMovie) then
@@ -339,6 +323,10 @@ begin
           end;
 
           dateElem := programElem.Date;
+
+          StartTimeElem :=programElem.Start;
+
+//          StartTime.AsISO8601StringRaw := StartTimeElem;
 
           { All dates and times in this DTD follow the same format, loosely based
             on ISO 8601.  They can be 'YYYYMMDDhhmmss' or some initial
@@ -457,7 +445,7 @@ begin
             // if(valid(date))
             // begin
             // trybegin
-             strOrigAirDate := TTVDB.dateToTVDBString (LaDate);
+             strOrigAirDate := TTVGeneral.dateToTVDBString (LaDate);
             // end;catch(ParseException x)
             // begin
             // CodeSite.WARN( 'Not using upparsable date: '+ date);
@@ -468,13 +456,14 @@ begin
 //            strOrigAirDate := FormatDateTime('yyyymmdd', LaDate);
           end;
 
+          ////////////////////////////////////////
           // once we get here, movies have already been handled. Should be only episodes
           // passed all checks, try and look it up on TheTVDB.com
 
-          if seriesTrackers.ContainsKey(seriesName) then
+          if seriesTrackers.IsExist(seriesName) then
           begin
 
-            UnseriesTracker := seriesTrackers[seriesName];
+            UnseriesTracker := seriesTrackers.Get(seriesName);
           end
           else
           begin
@@ -514,6 +503,10 @@ begin
           begin
             guideEpisode.setOriginalAirDate(LaDate); // sdf.parse(date));
           end;
+
+          guideEpisode.setOriginalStartAirDateTime( StartTimeElem );
+
+          //
           if (episodeTitle <> '') then
           begin
             guideEpisode.setTitle(episodeTitle);
@@ -521,6 +514,22 @@ begin
 
           if (not guideEpisode.hasTVDBid()) then
           begin // try using external id(s)
+
+            guideEpisode.SetOriginalms_progid('');
+
+              for idxEpisodeNum := 0 to programElem.Episodenum.Count - 1 do
+              begin
+                if SameText(programElem.Episodenum[idxEpisodeNum].System, 'ms_progid') then
+                begin
+                  ms_progidElem := programElem.Episodenum[idxEpisodeNum];
+                  guideEpisode.SetOriginalms_progid( ms_progidElem.Text );
+                  break;
+                end;
+
+              end;
+
+
+
             if (isZap2It) then
             begin
               zap2ItId := getZap2ItId(programElem);
@@ -534,7 +543,7 @@ begin
             // TODO: parse IMDB id's (need a sample xmltv file that uses IMDB id's)
           end;
 
-          successfulLookup := False;
+    //      successfulLookup := False;
 
           tvdb := TTVDB.Create(guideEpisode);
 
@@ -542,6 +551,7 @@ begin
 
           if (successfulLookup) then
           begin // inject season/ep info to the xmltv doc
+
 
             // update onscreen episode num (gets displayed in guide)
             displayValue := iif(guideEpisode.isMultiPart, guideEpisode.getMultipartSeasonEpisodeNaming(),
@@ -552,7 +562,6 @@ begin
             programElem.Episodenum.GetItemBySystemAttribute('xmltv_ns', true).Text :=
               guideEpisode.getXMLTVSeasonEpisodeAttribute();
 
-            //
             // update description (used for storing multi-episode details and tvdbid)
             multiPartNaming := iif(guideEpisode.isMultiPart(), ' [' + guideEpisode.getMultipartSeasonEpisodeNaming() +
               ']', ''); // Like S01E01E02
@@ -564,7 +573,6 @@ begin
 
 
             programElem.Desc.GetItemByLangAttribute(lang, true).Text := newDesc;
-            // end;
 
 //            CodeSite.SendMsg('Added: ' + additionalInfo + ' to end of desc element.');
             inc(successCount);
@@ -585,16 +593,13 @@ begin
 
           //
 
-           if successCount=5 then begin
+           tvdb.Free;
+           tvdbSeries:=nil;
+            guideEpisode:=nil;
 
-           break;
-           end;
-
-          if Assigned(tvdbSeries) then
-           FreeAndNil(tvdbSeries);
-
-//          if assigned(tvdb) then
-//            FreeAndNil(tvdb);
+//           if successCount=5 then begin
+//           break;
+//           end;
 
 
 
@@ -604,15 +609,28 @@ begin
       end;
 
       CodeSite.SendMsg('********************TVDB LOOKUP SUMMARY**********************');
-     for st in seriesTrackers.Values do
+
+
+      seriesTrackersList:= TSeriesTrackerColl.Create(seriesTrackers.Values);//  = class(TList<ISeriesTracker>)
+      try
+      seriesTrackersList.Sort;
+      //
+     for st in seriesTrackersList do
       begin
+//        CodeSite.SendFmtMsg('%d/%g - %s', [st.getSucess, st.getPercentSuccessful, st.getSeries]);
         CodeSite.SendFmtMsg('%d/%d - %s', [st.getSucess, st.getTotal, st.getSeries]);
-        // CodeSite.SendMsg(tfl(st.getSucess()+'/'+st.getTotal(),10)+' - '+ st.getSeries());
       end;
+
       CodeSite.SendMsg('Total: ' + successCount.ToString + ' successful lookups, ' + failCount.ToString +
         ' failed lookups.');
       CodeSite.SendMsg('Of ' + progCount.ToString + ' total programs, ' + seriesTrackers.Count.ToString +
         ' unique series were looked up.');
+
+
+      finally
+        seriesTrackersList.Free;
+      end;
+
 
     end;
   finally
@@ -637,7 +655,7 @@ end;
 procedure TForm1.Timer1Timer(Sender: TObject);
 begin
   Timer1.Enabled:=false;
- Application.ProcessMessages;
+
   Application.ProcessMessages;
  processXMLTVFile('C:\Apps\mc2xml\xmltv.xml');
   Application.Terminate;
@@ -646,7 +664,7 @@ end;
 function TForm1.getZap2ItId(programElem: IXMLProgrammeType): string;
 var
   zap2ItId: string;
-  I: Integer;
+  I: NativeInt;//Integer;
   zap2ItEpisodeElem: IXMLEpisodenumType;
 begin
   zap2ItId := '';
@@ -732,7 +750,7 @@ end;
 
 function TForm1.findDescChildElementByAttributeValue(programElem: IXMLProgrammeType; lang: string): IXMLDescType;
 var
-  I: Integer;
+  I: NativeInt;//Integer;
 begin
   REsult := nil;
   for I := 0 to programElem.Desc.Count - 1 do

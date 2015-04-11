@@ -8,7 +8,7 @@
   {*
   {******************************************************* }
 
-unit uTVDBEpisode;
+unit xmltvdb.TVDBEpisode;
 
 interface
 
@@ -17,17 +17,14 @@ uses System.Generics.Collections;
 type
   ITVDBEpisode = interface['{95CA74BA-EDD5-44B3-A3C6-6158DCD22E5B}']
     function toString: String;
-//    procedure SetepisodeNumber(const Value: String);
-//    procedure SetfirstAired(const Value: String);
-//    procedure SethasImage(const Value: boolean);
-//    procedure SetseasonNumber(const Value: String);
-//    procedure Settitle(const Value: String);
     function GetepisodeNumber: String;
     function GetfirstAired: String;
     function GethasImage: boolean;
     function GetseasonNumber: String;
     function Gettitle: String;
 
+    procedure Assign( e:ITVDBEpisode);
+    procedure AddMissingInfo(e: ITVDBEpisode);
   end;
 
   TTVDBEpisode = class(TInterfacedObject,ITVDBEpisode)
@@ -38,26 +35,18 @@ type
     FseasonNumber: String;
     Ftitle: String;
   public
-//    procedure SetepisodeNumber(const Value: String);
-//    procedure SetfirstAired(const Value: String);
-//    procedure SethasImage(const Value: boolean);
-//    procedure SetseasonNumber(const Value: String);
-//    procedure Settitle(const Value: String);
     function GetepisodeNumber: String;
     function GetfirstAired: String;
     function GethasImage: boolean;
     function GetseasonNumber: String;
     function Gettitle: String;
 
-
-//    property episodeNumber: String read GetepisodeNumber write SetepisodeNumber;
-//    property firstAired: String read GetfirstAired write SetfirstAired;
-//    property hasImage: boolean read GethasImage write SethasImage;
-//    property seasonNumber: String read GetseasonNumber write SetseasonNumber;
-//    property title: String read Gettitle write Settitle;
-
     function toString: String;  reintroduce;
-    constructor Create(tvdbTitle: String; tvdbFirstAired: String; tvdbSeasonNumber: String; tvdbEpisodeNumber: String;    hasTVDBImage: boolean); overload;
+
+    procedure Assign( e:ITVDBEpisode);
+    procedure AddMissingInfo(e: ITVDBEpisode);
+    constructor Create(const tvdbTitle: String; const tvdbFirstAired: String;const  tvdbSeasonNumber: String;const  tvdbEpisodeNumber: String; const   hasTVDBImage: boolean); overload;
+
 
     destructor Destroy; override;
   end;
@@ -71,14 +60,42 @@ type
     function IsEmpty: boolean;
 
     function toString: String; reintroduce;
+
+    function FindByOriginalDate(ladate:string) : ITVDBEpisode;
   end;
 
 implementation
 
+uses
+  System.SysUtils;
+
 { implementation of TVDBEpisode }
 
-constructor TTVDBEpisode.Create(tvdbTitle, tvdbFirstAired, tvdbSeasonNumber, tvdbEpisodeNumber: String;
-  hasTVDBImage: boolean);
+procedure TTVDBEpisode.AddMissingInfo(e: ITVDBEpisode);
+begin
+        if Ftitle.IsEmpty and not e.Gettitle.IsEmpty then
+                 Ftitle := e.getTitle;
+
+        if FseasonNumber.IsEmpty and not e.GetseasonNumber.IsEmpty then
+                  FseasonNumber := e.GetseasonNumber;
+
+        if FepisodeNumber.IsEmpty and not e.GetepisodeNumber.IsEmpty then
+                  FepisodeNumber := e.GetepisodeNumber;
+
+end;
+
+procedure TTVDBEpisode.Assign(e: ITVDBEpisode);
+begin
+  self.Ftitle := e.getTitle;
+  self.FfirstAired := e.GetfirstAired;
+  self.FseasonNumber := e.GetseasonNumber;
+  self.FepisodeNumber := e.GetepisodeNumber;
+  self.FhasImage := e.GethasImage;
+
+end;
+
+constructor TTVDBEpisode.Create(const tvdbTitle, tvdbFirstAired, tvdbSeasonNumber, tvdbEpisodeNumber: String;
+ const  hasTVDBImage: boolean);
 begin
   inherited Create;
 
@@ -179,7 +196,24 @@ end;
 destructor TVDBEpisodeColl.Destroy;
 begin
 
-  inherited;
+  inherited Destroy;
+end;
+
+function TVDBEpisodeColl.FindByOriginalDate(ladate: string): ITVDBEpisode;
+var
+  ep:ITVDBEpisode;
+begin
+    Result := nil ;
+    for ep in Self do
+    begin
+      if sameText( ep.GetfirstAired, ladate) then
+      begin
+          Result := ep;
+      end;
+
+    end;
+
+
 end;
 
 function TVDBEpisodeColl.IsEmpty: boolean;
